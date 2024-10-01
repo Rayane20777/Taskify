@@ -2,12 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Taskify</title>
 </head>
 <body>
-<h1><%= "dwdw !" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="hello-servlet">Hello</a>
 </body>
 </html>
