@@ -22,5 +22,27 @@ public class TeamDAOImpl implements TeamDAO{
             e.printStackTrace();
 		}
 	}
+	
+
+	@Override
+    public List<Team> getAllTeams() {
+        String query = "SELECT * FROM teams";
+        List<Team> teams = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Team team = new Team(rs.getInt("id"), rs.getString("name"));
+                teams.add(team);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return teams;
+    }
+
 
 }
