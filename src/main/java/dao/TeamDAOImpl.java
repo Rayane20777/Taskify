@@ -7,7 +7,7 @@ import config.DatabaseConnection;
 import models.Team;
 
 
-public class TeamDAOImpl {
+public class TeamDAOImpl implements TeamDAO{
 	
 	public void addTeam(Team team) {
 		String query = "INSERT INTO team (name) VALUES (?)";
