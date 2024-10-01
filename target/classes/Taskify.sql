@@ -32,7 +32,7 @@ CREATE TABLE `members` (
                            `fname` varchar(50) NOT NULL,
                            `lname` varchar(50) NOT NULL,
                            `email` varchar(255) NOT NULL,
-                           `role` enum('PROJECT MANAGER','DEVELOPER','DESIGNER') NOT NULL,
+                           `role` enum('PROJECT_MANAGER','DEVELOPER','DESIGNER') NOT NULL,
                            `team_id` int(11) NOT NULL,
                            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
                            `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
