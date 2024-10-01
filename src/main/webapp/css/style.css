@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root{
+	--white: #fafafaff;
+	--black: #1f2125ff;
+	--jet: #141518ff;
+	--dark: #003459ff;
+	--med: #007ea7ff;
+	--main: #219ebcff;
+	--light: #47afc8ff;
+	--side: #F0B42A;
+}
+
+*{
+	margin : 0;
+	padding:0;
+	box-sizing : border-box;
+	scroll-behavior: smooth;
+	font-family: "Rubik", system-ui;
+}
+
+body{
+	background-color: var(--white);
+}
