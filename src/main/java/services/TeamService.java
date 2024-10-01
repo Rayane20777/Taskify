@@ -10,5 +10,6 @@ public interface TeamService {
     List<TeamDTO> getAllTeams();
     void updateTeam(TeamDTO teamDTO);
     void deleteTeam(int id);
+    List<TeamDTO> searchTeamsByName(String name);
 
 }

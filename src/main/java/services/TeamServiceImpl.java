@@ -6,12 +6,15 @@ import java.util.List;
 import dao.TeamDAO;
 import dto.TeamDTO;
 import models.Team;
+import repositories.TeamRepository;
 
 public class TeamServiceImpl implements TeamService{
     private TeamDAO teamDAO;
+    private TeamRepository teamRepository;
 
-    public TeamServiceImpl(TeamDAO teamDAO) {
+    public TeamServiceImpl(TeamDAO teamDAO, TeamRepository teamRepository) {
         this.teamDAO = teamDAO;
+        this.teamRepository = teamRepository;
     }
     
     @Override
@@ -44,4 +47,15 @@ public class TeamServiceImpl implements TeamService{
     public void deleteTeam(int id) {
         teamDAO.deleteTeam(id);
     }
+    
+    @Override
+    public List<TeamDTO> searchTeamsByName(String name) {
+        List<Team> teams = teamRepository.searchTeamsByName(name);
+        List<TeamDTO> teamDTOs = new ArrayList<>();
+        for (Team team : teams) {
+            teamDTOs.add(new TeamDTO(team.getId(), team.getName()));
+        }
+        return teamDTOs;
+    }
+    
 }
