@@ -10,7 +10,7 @@ import models.Team;
 public class TeamDAOImpl implements TeamDAO{
 	
 	public void addTeam(Team team) {
-		String query = "INSERT INTO team (name) VALUES (?)";
+		String query = "INSERT INTO teams (name) VALUES (?)";
 		
 		try(Connection conn = DatabaseConnection.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(query)){
