@@ -39,4 +39,9 @@ public class TeamServiceImpl implements TeamService{
         team.setName(teamDTO.getName());
         teamDAO.updateTeam(team);
     }
+    
+    @Override
+    public void deleteTeam(int id) {
+        teamDAO.deleteTeam(id);
+    }
 }

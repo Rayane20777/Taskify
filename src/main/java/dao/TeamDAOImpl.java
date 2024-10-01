@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import config.DatabaseConnection;
@@ -58,6 +59,18 @@ public class TeamDAOImpl implements TeamDAO{
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public void deleteTeam(int id) {
+        String query = "DELETE FROM teams WHERE id = ?";
 
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
