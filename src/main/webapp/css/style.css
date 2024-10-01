@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 :root{
 	--white: #fafafaff;
@@ -21,4 +21,126 @@
 
 body{
 	background-color: var(--white);
+}
+
+#landing{
+	width: 100%;
+	height:100vh;
+	padding :30px 100px;
+	
+	header{
+		display: flex;
+		justify-content: space-between;
+		align-items:center;
+		color: var(--jet);
+		
+		.h-right{
+			display: flex;
+			align-items:center;
+			gap: 100px;
+			
+			.brand{
+				position:relative;
+				display:flex;
+				align-items:center;
+				.b-circle{
+					border-radius : 200px;
+					left:0px;
+					z-index:-1;
+					height:35px;
+					width:35px;
+					background-color: var(--main);
+					position:absolute;
+				}
+			}
+		}
+		
+		nav{
+			display : flex;
+			gap:40px;
+			a{
+				color: var(--jet);
+				text-decoration : none;
+				font-size:18px;
+				
+			}
+		}
+		
+		.contact{
+			padding:5px;
+			padding-left:25px;
+			display:flex;
+			align-items:center;
+			gap:12px;
+			color: var(--main);
+			border : 2px solid var(--main);
+			border-radius: 30px;
+			h4{
+				font-weight:500;
+			}
+			i{
+				font-size:28px;
+			}
+		}
+	}
+	
+	
+	article{
+		padding-top: 100px;
+		display:flex;
+		justify-content: space-between;
+		
+		.box-01{
+			background-color:red;
+			width:650px;
+		
+			h1{
+				font-size:45px;
+				margin-bottom:30px;
+				
+				span{
+					background-color: var(--main);
+					padding: 0px 7px;
+					border-radius :15px;
+					/*color : var(--white);*/
+				}
+			}
+			
+			.login{
+				form{
+					display:flex;
+					align-items: center;
+					gap : 10px;
+					margin-bottom : 5px !important;
+					
+					
+					input{
+						padding :10px;
+						border-radius : 25px;
+						width : 300px;
+						border : 2px solid var(--main);
+						outline:none;
+					}
+					button{
+						padding :7px;
+						width :40px;
+						border-radius : 50%;
+						font-size :18px;
+						border : 2px solid var(--main);
+						background-color : var(--main);
+					}
+				}
+				
+				.l-info{
+					color: red;
+				}
+			}
+		}
+		
+		.box-02{
+			width:500px;
+			height:450px;
+			background-color: var(--light);
+		}
+	}
 }
