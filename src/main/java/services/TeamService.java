@@ -8,5 +8,6 @@ public interface TeamService {
 	
     void addTeam(TeamDTO teamDTO);
     List<TeamDTO> getAllTeams();
+    void updateTeam(TeamDTO teamDTO);
 
 }

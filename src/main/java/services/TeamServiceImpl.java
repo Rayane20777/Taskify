@@ -31,4 +31,12 @@ public class TeamServiceImpl implements TeamService{
         }
         return teamDTOs;
     }
+    
+    @Override
+    public void updateTeam(TeamDTO teamDTO) {
+        Team team = new Team();
+        team.setId(teamDTO.getId());
+        team.setName(teamDTO.getName());
+        teamDAO.updateTeam(team);
+    }
 }
