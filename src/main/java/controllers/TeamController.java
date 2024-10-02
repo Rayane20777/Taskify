@@ -57,22 +57,54 @@ public class TeamController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
+        String method = request.getParameter("_method");
+        
+        if ("DELETE".equals(method)) {
+            doDelete(request, response);
+        } else {
+            String name = request.getParameter("name");
 
-        if (name != null && !name.trim().isEmpty()) {
+            if (name != null && !name.trim().isEmpty()) {
+                try {
+                    TeamDTO teamDTO = new TeamDTO();
+                    teamDTO.setName(name);
+                    teamService.addTeam(teamDTO);
+                    response.sendRedirect("team");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    request.setAttribute("errorMessage", "Failed to add team.");
+                    doGet(request, response);
+                }
+            } else {
+                request.setAttribute("errorMessage", "Team name cannot be empty.");
+                doGet(request, response);
+            }
+        }
+    }
+    
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String idParam = request.getParameter("id");
+
+        if (idParam != null) {
             try {
-                TeamDTO teamDTO = new TeamDTO();
-                teamDTO.setName(name);
-                teamService.addTeam(teamDTO);
-                response.sendRedirect("team"); 
+                int id = Integer.parseInt(idParam);
+                teamService.deleteTeam(id);
+                response.sendRedirect("team");
             } catch (SQLException e) {
-                e.printStackTrace(); 
-                request.setAttribute("errorMessage", "Failed to add team.");
+                e.printStackTrace();
+                request.setAttribute("errorMessage", "Failed to delete team.");
+                doGet(request, response);
+            } catch (NumberFormatException e) {
+                request.setAttribute("errorMessage", "Invalid team ID.");
                 doGet(request, response);
             }
         } else {
-            request.setAttribute("errorMessage", "Team name cannot be empty.");
+            request.setAttribute("errorMessage", "Team ID is missing.");
             doGet(request, response);
         }
     }
+
+
 }
