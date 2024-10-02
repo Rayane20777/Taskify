@@ -12,7 +12,7 @@ import java.util.List;
 public class MemberRepositoryImpl implements MemberRepository {
 	
 	 @Override
-	    public List<Member> searchMembersByName(String name) {
+	    public List<Member> searchMembers(String name) {
 	        String query = "SELECT * FROM members WHERE fname LIKE ? OR lname LIKE ?";
 	        List<Member> members = new ArrayList<>();
 
