@@ -1,5 +1,14 @@
 package dao;
 
-public interface TeamDAO {
+import java.util.List;
 
+import models.Team;
+
+
+public interface TeamDAO {
+	
+    void addTeam(Team team);
+    List<Team> getAllTeams();
+    void updateTeam(Team team);
+    void deleteTeam(int id);
 }
