@@ -1,5 +1,26 @@
 package dao;
 
-public class TeamDAOImpl {
+import java.sql.*;
+
+
+import config.DatabaseConnection;
+import models.Team;
+
+
+public class TeamDAOImpl implements TeamDAO{
+	
+	public void addTeam(Team team) {
+		String query = "INSERT INTO teams (name) VALUES (?)";
+		
+		try(Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(query)){
+			
+			stmt.setString(1, team.getName());
+			
+			stmt.executeUpdate();
+		}catch(SQLException e) {
+            e.printStackTrace();
+		}
+	}
 
 }
