@@ -32,19 +32,27 @@
     <tbody>
         <c:forEach var="team" items="${teams}">
             <tr>
-                <td style="border: 1px solid black;">${team.id}</td>
-                <td style="border: 1px solid black;">${team.name}</td>
-                <td style="border: 1px solid black;">
-                    <form action="team" method="post" style="display:inline;">
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <input type="hidden" name="id" value="${team.id}" />
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
+                <form action="team" method="post">
+                    <input type="hidden" name="_method" value="PUT" />
+                    <input type="hidden" name="id" value="${team.id}" />
+                    <td style="border: 1px solid black;">${team.id}</td>
+                    <td style="border: 1px solid black;">
+                        <input type="text" name="name" value="${team.name}" />
+                    </td>
+                    <td style="border: 1px solid black;">
+                        <button type="submit">Update</button>
+                        <form action="team" method="post" style="display:inline;">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <input type="hidden" name="id" value="${team.id}" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </form>
             </tr>
         </c:forEach>
     </tbody>
 </table>
+
 
 
 </body>

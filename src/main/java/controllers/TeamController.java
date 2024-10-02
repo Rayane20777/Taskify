@@ -26,12 +26,12 @@ public class TeamController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         try {
-            Connection connection = DatabaseConnection.getConnection(); // Ensure this works
+            Connection connection = DatabaseConnection.getConnection(); 
             if (connection == null) {
                 throw new SQLException("Failed to create database connection.");
             }
             TeamDAO teamDAO = new TeamDAOImpl(connection);
-            teamService = new TeamServiceImpl(teamDAO); // Pass in the DAO instance
+            teamService = new TeamServiceImpl(teamDAO); 
         } catch (SQLException e) {
             throw new ServletException("Cannot initialize DAO", e);
         }
@@ -58,9 +58,33 @@ public class TeamController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String method = request.getParameter("_method");
-        
-        if ("DELETE".equals(method)) {
-            doDelete(request, response);
+
+        if ("PUT".equalsIgnoreCase(method)) {
+            try {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String name = request.getParameter("name");
+                
+                TeamDTO teamDTO = new TeamDTO();
+                teamDTO.setId(id);
+                teamDTO.setName(name);
+                
+                teamService.updateTeam(teamDTO);
+                response.sendRedirect("team");  
+            } catch (SQLException e) {
+                e.printStackTrace();
+                request.setAttribute("errorMessage", "Failed to update team.");
+                request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+            }
+        } else if ("DELETE".equalsIgnoreCase(method)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            try {
+                teamService.deleteTeam(id);
+                response.sendRedirect("team");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                request.setAttribute("errorMessage", "Failed to delete team.");
+                doGet(request, response);
+            }
         } else {
             String name = request.getParameter("name");
 
@@ -81,6 +105,7 @@ public class TeamController extends HttpServlet {
             }
         }
     }
+
     
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
