@@ -128,7 +128,7 @@ public class ProjectDTO {
     }
 
     public Project dtoToModel() {
-        return new Project(id, name, description, startDate, endDate, status, team.dtoToModel());
+        return new Project(id, name, description, startDate, endDate, status, team.dtoModel(), totalTasks, completedTasks, progressPercentage);
     }
 
     public static ProjectDTO modelToDTO(Project project) {
@@ -139,7 +139,10 @@ public class ProjectDTO {
             project.getStartDate(),
             project.getEndDate(),
             project.getStatus(),
-            TeamDTO.modelToDTO(project.getTeam())
+            TeamDTO.modelToDTO(project.getTeam()),
+            project.getTotalTasks(),
+            project.getCompletedTasks(),
+            project.getProgressPercentage()
         );
     }
 }

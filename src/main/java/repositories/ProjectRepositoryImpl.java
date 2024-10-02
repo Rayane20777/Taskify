@@ -7,15 +7,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.TeamDAO;
+import dao.TeamDAOImpl;
 import models.Project;
 import models.Team;
 import models.enums.ProjectStatus;
 
 public class ProjectRepositoryImpl implements ProjectRepository{
 	private final Connection connection;
+	private final TeamDAOImpl teamDAO;
 
     public ProjectRepositoryImpl(Connection connection) {
         this.connection = connection;
+		this.teamDAO = new TeamDAOImpl();
     }
     
 	@Override
@@ -38,6 +42,7 @@ public class ProjectRepositoryImpl implements ProjectRepository{
 	        
 	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
 	            while (resultSet.next()) {
+					Team team = teamDAO.getTeamById(resultSet.getInt("team_id"));
 	            	 Project project = new Project(
 	                         resultSet.getInt("id"),
 	                         resultSet.getString("name"),
@@ -45,7 +50,7 @@ public class ProjectRepositoryImpl implements ProjectRepository{
 	                         resultSet.getDate("start_date").toLocalDate(),
 	                         resultSet.getDate("end_date").toLocalDate(),
 	                         ProjectStatus.valueOf(resultSet.getString("status")),
-	                         new Team(),
+	                         new Team(team.getId(), team.getName()),
 	                         resultSet.getInt("total_tasks"),
 	                         resultSet.getInt("completed_tasks"),
 	                         resultSet.getDouble("progress_percentage")

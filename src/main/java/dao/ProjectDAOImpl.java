@@ -14,9 +14,13 @@ import models.enums.ProjectStatus;
 
 public class ProjectDAOImpl implements ProjectDAO{
 	private final Connection connection;
+    private final TeamDAOImpl teamDAO;
+
 
     public ProjectDAOImpl(Connection connection) {
         this.connection = connection;
+        this.teamDAO = new TeamDAOImpl();
+
     }
     
     
@@ -91,20 +95,21 @@ public class ProjectDAOImpl implements ProjectDAO{
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-            	 Project project = new Project(
-                         resultSet.getInt("id"),
-                         resultSet.getString("name"),
-                         resultSet.getString("description"),
-                         resultSet.getDate("start_date").toLocalDate(),
-                         resultSet.getDate("end_date").toLocalDate(),
-                         ProjectStatus.valueOf(resultSet.getString("status")),
-                         new Team(), 
-                         resultSet.getInt("total_tasks"),
-                         resultSet.getInt("completed_tasks"),
-                         resultSet.getDouble("progress_percentage")
-                     );
+                Team team = teamDAO.getTeamById(resultSet.getInt("team_id"));
+                Project project = new Project(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getDate("start_date").toLocalDate(),
+                        resultSet.getDate("end_date").toLocalDate(),
+                        ProjectStatus.valueOf(resultSet.getString("status")),
+                        new Team(team.getId(), team.getName()),
+                        resultSet.getInt("total_tasks"),
+                        resultSet.getInt("completed_tasks"),
+                        resultSet.getDouble("progress_percentage")
+                    );
 
-                     projects.add(project);
+                    projects.add(project);
             }
         }
 
@@ -128,18 +133,19 @@ public class ProjectDAOImpl implements ProjectDAO{
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) { 
-                    return new Project(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getDate("start_date").toLocalDate(),
-                        resultSet.getDate("end_date").toLocalDate(),
-                        ProjectStatus.valueOf(resultSet.getString("status")),
-                        new Team(), 
-                        resultSet.getInt("total_tasks"),
-                        resultSet.getInt("completed_tasks"),
-                        resultSet.getDouble("progress_percentage")
-                    );
+                    Team team = teamDAO.getTeamById(resultSet.getInt("team_id"));
+	            	 return new Project(
+	                         resultSet.getInt("id"),
+	                         resultSet.getString("name"),
+	                         resultSet.getString("description"),
+	                         resultSet.getDate("start_date").toLocalDate(),
+	                         resultSet.getDate("end_date").toLocalDate(),
+	                         ProjectStatus.valueOf(resultSet.getString("status")),
+	                         new Team(team.getId(), team.getName()),
+	                         resultSet.getInt("total_tasks"),
+	                         resultSet.getInt("completed_tasks"),
+	                         resultSet.getDouble("progress_percentage")
+	                     );
                 } else {
                     return null; 
                 }
