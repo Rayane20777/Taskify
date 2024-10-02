@@ -12,9 +12,12 @@ public class TeamServiceImpl implements TeamService{
     private TeamDAO teamDAO;
     private TeamRepository teamRepository;
 
-    public TeamServiceImpl(TeamDAO teamDAO, TeamRepository teamRepository) {
-        this.teamDAO = teamDAO;
+    public TeamServiceImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
+    }
+    
+    public TeamServiceImpl(TeamDAO teamDAO) {
+        this.teamDAO = teamDAO;
     }
     
     @Override
