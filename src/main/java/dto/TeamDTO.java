@@ -1,5 +1,7 @@
 package dto;
 
+import models.Team;
+
 public class TeamDTO {
 	private int id;
 	private String name;
@@ -22,5 +24,13 @@ public class TeamDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public Team dtoModel() {
+		return new Team(id,name);
+	}
+	
+	public static TeamDTO modelToDTO(Team team) {
+		return new TeamDTO(team.getId(), team.getName());
 	}
 }
