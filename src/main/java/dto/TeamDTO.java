@@ -26,11 +26,8 @@ public class TeamDTO {
 		this.name = name;
 	}
 	
-<<<<<<< HEAD
+
 	public Team dtoToModel() {
-=======
-	public Team dtoModel() {
->>>>>>> ec1fc4fb2f251c36bcc2f503b95da35b93c796fa
 		return new Team(id,name);
 	}
 	

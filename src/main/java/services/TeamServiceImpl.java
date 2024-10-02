@@ -12,25 +12,15 @@ public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
     private TeamDAO teamDAO;
 
-<<<<<<< HEAD
     public TeamServiceImpl(TeamDAO teamDAO) {
         this.teamDAO = teamDAO;
     }
     
-=======
->>>>>>> ec1fc4fb2f251c36bcc2f503b95da35b93c796fa
     public TeamServiceImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
     }
     
-<<<<<<< HEAD
 
-=======
-    public TeamServiceImpl(TeamDAO teamDAO) {
-        this.teamDAO = teamDAO;
-    }
-    
->>>>>>> ec1fc4fb2f251c36bcc2f503b95da35b93c796fa
     @Override
     public Team addTeam(TeamDTO team) throws SQLException {
         Team teamModel = team.dtoToModel();
@@ -48,31 +38,10 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-<<<<<<< HEAD
     public void deleteTeam(Integer id) throws SQLException {
         if (teamDAO.getTeamById(id) == null) {
             throw new SQLException("Team not found with ID: " + id);
         }
-=======
-    public TeamDTO getTeamById(int id) {
-        Team team = teamDAO.getTeamById(id);
-        if (team != null) {
-            return new TeamDTO(team.getId(), team.getName());
-        }
-        return null;
-    }
-    
-    @Override
-    public void updateTeam(TeamDTO teamDTO) {
-        Team team = new Team();
-        team.setId(teamDTO.getId());
-        team.setName(teamDTO.getName());
-        teamDAO.updateTeam(team);
-    }
-    
-    @Override
-    public void deleteTeam(int id) {
->>>>>>> ec1fc4fb2f251c36bcc2f503b95da35b93c796fa
         teamDAO.deleteTeam(id);
     }
 

@@ -22,8 +22,8 @@ public class TeamController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        Connection connection = DatabaseConnection.getConnection(); // Get your database connection
-        teamService = new TeamServiceImpl(new TeamDAOImpl(connection)); // Pass the connection to TeamDAOImpl
+        Connection connection = DatabaseConnection.getConnection(); 
+        teamService = new TeamServiceImpl(new TeamDAOImpl(connection)); 
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TeamController extends HttpServlet {
 
             try {
                 teamService.addTeam(teamDTO); 
-                response.sendRedirect("team"); // Redirect after successful addition
+                response.sendRedirect("team"); 
             } catch (SQLException e) {
                 request.setAttribute("errorMessage", "Error adding team: " + e.getMessage());
                 request.getRequestDispatcher("/WEB-INF/jsp/Team.jsp").forward(request, response);
