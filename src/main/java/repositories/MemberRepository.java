@@ -5,5 +5,5 @@ import java.util.List;
 import models.Member;
 
 public interface MemberRepository {
-    List<Member> searchMembersByName(String name);  
+    List<Member> searchMembers(String name);  
 }

@@ -1,12 +1,15 @@
 package services;
 
-import dto.MemberDTO;
+import java.sql.SQLException;
 import java.util.List;
 
+import dto.MemberDTO;
+import models.Member;
+
 public interface MemberService {
-    void addMember(MemberDTO memberDTO);
-    List<MemberDTO> getAllMembers();
-    List<MemberDTO> searchMembersByName(String name);
-    void updateMember(MemberDTO memberDTO);
-    void deleteMember(int id);
+    public Member addMember(MemberDTO memberDTO) throws SQLException;
+    public Member updateMember(MemberDTO memberDTO) throws SQLException;
+    public void deleteMember(int id) throws SQLException;
+    public List<Member> getAllMembers() throws SQLException;
+    public List<Member> searchMembers(String name) throws SQLException;
 }
