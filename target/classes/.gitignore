@@ -1,1 +1,8 @@
 /services/
+/config/
+/controllers/
+/dao/
+/dto/
+/models/
+/repositories/
+/utils/

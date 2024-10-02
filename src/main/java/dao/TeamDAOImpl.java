@@ -9,10 +9,8 @@ import models.Team;
 
 
 public class TeamDAOImpl implements TeamDAO{
-    public TeamDAOImpl() {
-    }
-
-	public void addTeam(Team team) {
+	
+	public void addTeam(Team team) throws SQLException {
 		String query = "INSERT INTO teams (name) VALUES (?)";
 		
 		try(Connection conn = DatabaseConnection.getConnection();
@@ -21,14 +19,13 @@ public class TeamDAOImpl implements TeamDAO{
 			stmt.setString(1, team.getName());
 			
 			stmt.executeUpdate();
-		}catch(SQLException e) {
-            e.printStackTrace();
 		}
+	
 	}
 	
 
 	@Override
-    public List<Team> getAllTeams() {
+    public List<Team> getAllTeams() throws SQLException {
         String query = "SELECT * FROM teams";
         List<Team> teams = new ArrayList<>();
 
@@ -40,15 +37,13 @@ public class TeamDAOImpl implements TeamDAO{
                 Team team = new Team(rs.getInt("id"), rs.getString("name"));
                 teams.add(team);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } 
 
         return teams;
     }
 	
     @Override
-    public Team getTeamById(int id) {
+    public Team getTeamById(int id) throws SQLException {
         String query = "SELECT * FROM teams WHERE id = ?";
         Team team = null;
 
@@ -61,15 +56,13 @@ public class TeamDAOImpl implements TeamDAO{
             if (rs.next()) {
                 team = new Team(rs.getInt("id"), rs.getString("name"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } 
 
         return team;
     }
 	
     @Override
-    public void updateTeam(Team team) {
+    public void updateTeam(Team team) throws SQLException {
         String query = "UPDATE teams SET name = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -78,13 +71,11 @@ public class TeamDAOImpl implements TeamDAO{
             stmt.setString(1, team.getName());
             stmt.setInt(2, team.getId());
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } 
     }
     
     @Override
-    public void deleteTeam(int id) {
+    public void deleteTeam(int id) throws SQLException {
         String query = "DELETE FROM teams WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -92,8 +83,6 @@ public class TeamDAOImpl implements TeamDAO{
 
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } 
     }
 }
