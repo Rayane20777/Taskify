@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class TeamController extends HttpServlet {
 
@@ -39,7 +40,11 @@ public class TeamController extends HttpServlet {
             TeamDTO teamDTO = new TeamDTO();
             teamDTO.setName(name);
 
-            teamService.addTeam(teamDTO);
+            try {
+                teamService.addTeam(teamDTO);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             response.sendRedirect("showTeamPage");
         } else {

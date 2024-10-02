@@ -54,6 +54,7 @@
 		
 			<div class="art-left">
 				<div class="box-02">
+					<img src="./img/box-03.png" alt="girl holding a pen and a notebook"/>
 					<div class="mini-box-02"></div>
 				</div>
 			</div>
