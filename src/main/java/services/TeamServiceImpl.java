@@ -36,6 +36,15 @@ public class TeamServiceImpl implements TeamService{
     }
     
     @Override
+    public TeamDTO getTeamById(int id) {
+        Team team = teamDAO.getTeamById(id);
+        if (team != null) {
+            return new TeamDTO(team.getId(), team.getName());
+        }
+        return null;
+    }
+    
+    @Override
     public void updateTeam(TeamDTO teamDTO) {
         Team team = new Team();
         team.setId(teamDTO.getId());

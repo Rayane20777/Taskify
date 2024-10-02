@@ -9,6 +9,7 @@ public interface TeamDAO {
 	
     void addTeam(Team team);
     List<Team> getAllTeams();
+    Team getTeamById(int id);
     void updateTeam(Team team);
     void deleteTeam(int id);
 }

@@ -46,6 +46,27 @@ public class TeamDAOImpl implements TeamDAO{
     }
 	
     @Override
+    public Team getTeamById(int id) {
+        String query = "SELECT * FROM teams WHERE id = ?";
+        Team team = null;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                team = new Team(rs.getInt("id"), rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return team;
+    }
+	
+    @Override
     public void updateTeam(Team team) {
         String query = "UPDATE teams SET name = ? WHERE id = ?";
 

@@ -8,6 +8,7 @@ public interface TeamService {
 	
     void addTeam(TeamDTO teamDTO);
     List<TeamDTO> getAllTeams();
+    TeamDTO getTeamById(int id);
     void updateTeam(TeamDTO teamDTO);
     void deleteTeam(int id);
     List<TeamDTO> searchTeamsByName(String name);
