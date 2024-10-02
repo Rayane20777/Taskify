@@ -1,5 +1,6 @@
 package services;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class TeamServiceImpl implements TeamService{
     }
     
     @Override
-    public void addTeam(TeamDTO teamDTO) {
+    public void addTeam(TeamDTO teamDTO) throws SQLException {
         Team team = new Team();
         team.setName(teamDTO.getName());
         
@@ -31,7 +32,7 @@ public class TeamServiceImpl implements TeamService{
     }
     
     @Override
-    public List<TeamDTO> getAllTeams() {
+    public List<TeamDTO> getAllTeams() throws SQLException{
         List<Team> teams = teamDAO.getAllTeams();
         List<TeamDTO> teamDTOs = new ArrayList<>();
         for (Team team : teams) {
@@ -41,7 +42,7 @@ public class TeamServiceImpl implements TeamService{
     }
     
     @Override
-    public TeamDTO getTeamById(int id) {
+    public TeamDTO getTeamById(int id) throws SQLException {
         Team team = teamDAO.getTeamById(id);
         if (team != null) {
             return new TeamDTO(team.getId(), team.getName());
@@ -50,7 +51,7 @@ public class TeamServiceImpl implements TeamService{
     }
     
     @Override
-    public void updateTeam(TeamDTO teamDTO) {
+    public void updateTeam(TeamDTO teamDTO) throws SQLException{
         Team team = new Team();
         team.setId(teamDTO.getId());
         team.setName(teamDTO.getName());
@@ -58,7 +59,7 @@ public class TeamServiceImpl implements TeamService{
     }
     
     @Override
-    public void deleteTeam(int id) {
+    public void deleteTeam(int id) throws SQLException{
         teamDAO.deleteTeam(id);
     }
     
