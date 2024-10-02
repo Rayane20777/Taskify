@@ -21,21 +21,30 @@
     </c:if>
 
     <h2>Team List</h2>
-    <table border="1">
-        <thead>
+   <table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="team" items="${teams}">
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <td>${team.id}</td>
+                <td>${team.name}</td>
+                <td>
+                    <form action="team" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="id" value="${team.id}" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="team" items="${teams}">
-                <tr>
-                    <td>${team.id}</td>
-                    <td>${team.name}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+        </c:forEach>
+    </tbody>
+</table>
+
 </body>
 </html>
