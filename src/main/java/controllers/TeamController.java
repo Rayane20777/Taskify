@@ -10,18 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import config.DatabaseConnection; 
 
 public class TeamController extends HttpServlet {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private TeamService teamService;
+    private static final long serialVersionUID = 1L;
+    private TeamService teamService;
 
     @Override
     public void init() throws ServletException {
-        teamService = new TeamServiceImpl(new TeamDAOImpl());
+        Connection connection = DatabaseConnection.getConnection(); // Get your database connection
+        teamService = new TeamServiceImpl(new TeamDAOImpl(connection)); // Pass the connection to TeamDAOImpl
     }
 
     @Override
@@ -39,9 +41,13 @@ public class TeamController extends HttpServlet {
             TeamDTO teamDTO = new TeamDTO();
             teamDTO.setName(name);
 
-            teamService.addTeam(teamDTO);
-
-            response.sendRedirect("showTeamPage");
+            try {
+                teamService.addTeam(teamDTO); 
+                response.sendRedirect("team"); // Redirect after successful addition
+            } catch (SQLException e) {
+                request.setAttribute("errorMessage", "Error adding team: " + e.getMessage());
+                request.getRequestDispatcher("/WEB-INF/jsp/Team.jsp").forward(request, response);
+            }
         } else {
             request.setAttribute("errorMessage", "Team name cannot be empty.");
             request.getRequestDispatcher("/WEB-INF/jsp/Team.jsp").forward(request, response);

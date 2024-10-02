@@ -1,6 +1,7 @@
 package dto;
 
 
+import models.Member;
 import models.enums.Role;
 
 
@@ -76,6 +77,21 @@ public class MemberDTO {
 
     public void setTeamId(int team_id) {
         this.team_id = team_id;
+    }
+    
+    public Member dtoToModel() {
+        return new Member(id, fname, lname, email, role, team_id);
+    }
+    
+    public static MemberDTO modelToDTO(Member member) {
+        return new MemberDTO(
+            member.getId(),
+            member.getFname(),
+            member.getLname(),
+            member.getEmail(),
+            member.getRole(),
+            member.getTeamId()
+        );
     }
 		
 }

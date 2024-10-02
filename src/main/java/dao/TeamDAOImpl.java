@@ -4,73 +4,94 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import config.DatabaseConnection;
 import models.Team;
 
 
 public class TeamDAOImpl implements TeamDAO{
-	
-	public void addTeam(Team team) {
-		String query = "INSERT INTO teams (name) VALUES (?)";
-		
-		try(Connection conn = DatabaseConnection.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(query)){
-			
-			stmt.setString(1, team.getName());
-			
-			stmt.executeUpdate();
-		}catch(SQLException e) {
-            e.printStackTrace();
-		}
-	}
-	
+    private final Connection connection;
 
-	@Override
-    public List<Team> getAllTeams() {
-        String query = "SELECT * FROM teams";
-        List<Team> teams = new ArrayList<>();
+    public TeamDAOImpl(Connection connection) {
+        this.connection = connection;
+    }
+    
+    @Override
+    public Team addTeam(Team team) throws SQLException {
+        String query = "INSERT INTO Teams (name) VALUES (?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, team.getName());
 
-            while (rs.next()) {
-                Team team = new Team(rs.getInt("id"), rs.getString("name"));
-                teams.add(team);
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        team.setId(generatedKeys.getInt(1));
+                    }
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
-        return teams;
+        return team;
     }
-	
+    
     @Override
-    public void updateTeam(Team team) {
-        String query = "UPDATE teams SET name = ? WHERE id = ?";
+    public Team updateTeam(Team team) throws SQLException {
+        String query = "UPDATE Teams SET name = ? WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, team.getName());
+            preparedStatement.setInt(2, team.getId());
 
-            stmt.setString(1, team.getName());
-            stmt.setInt(2, team.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            preparedStatement.executeUpdate();
+        }
+
+        return team;
+    }
+    
+    @Override
+    public void deleteTeam(Integer id) throws SQLException {
+        String query = "DELETE FROM Teams WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
         }
     }
     
     @Override
-    public void deleteTeam(int id) {
-        String query = "DELETE FROM teams WHERE id = ?";
+    public List<Team> getAllTeams() throws SQLException {
+        List<Team> teams = new ArrayList<>();
+        String query = "SELECT * FROM Teams";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            while (resultSet.next()) {
+                Team team = new Team(resultSet.getInt("id"), resultSet.getString("name"));
+                teams.add(team);
+            }
+        }
+
+        return teams;
+    }
+    
+
+    @Override
+    public Team getTeamById(int id) throws SQLException {
+        String query = "SELECT * FROM Teams WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new Team(resultSet.getInt("id"), resultSet.getString("name"));
+                } else {
+                    return null;
+                }
+            }
         }
     }
+	
 }

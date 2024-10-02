@@ -22,7 +22,7 @@
 
     <servlet-mapping>
         <servlet-name>TeamController</servlet-name>
-        <url-pattern>/showTeamPage</url-pattern>
+        <url-pattern>/team</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
