@@ -36,6 +36,17 @@ public class MemberServiceImpl implements MemberService{
     }
     
     @Override
+    public List<MemberDTO> searchMembersByName(String name) {
+        List<Member> members = memberRepository.searchMembersByName(name);
+        List<MemberDTO> memberDTOs = new ArrayList<>();
+        for (Member member : members) {
+            memberDTOs.add(new MemberDTO(member.getId(), member.getFname(), member.getLname(),
+                    member.getEmail(), member.getRole(), member.getTeamId()));
+        }
+        return memberDTOs;
+    }
+    
+    @Override
     public void updateMember(MemberDTO memberDTO) {
         Member member = new Member(memberDTO.getId(), memberDTO.getFname(), memberDTO.getLname(),
                 memberDTO.getEmail(), memberDTO.getRole(), memberDTO.getTeamId());
