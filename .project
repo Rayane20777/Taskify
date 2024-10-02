@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Taskif</name>
+	<name>DemoTask</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -36,7 +36,11 @@
 	</natures>
 	<filteredResources>
 		<filter>
+<<<<<<< HEAD
 			<id>1727782767415</id>
+=======
+			<id>1727862491968</id>
+>>>>>>> c1d9b3a1f049dc0d92b6be4989cdc294e5afe515
 			<name></name>
 			<type>30</type>
 			<matcher>

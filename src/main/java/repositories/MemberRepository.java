@@ -1,5 +1,9 @@
 package repositories;
 
-public interface MemberRepository {
+import java.util.List;
 
+import models.Member;
+
+public interface MemberRepository {
+    List<Member> searchMembersByName(String name);  
 }
