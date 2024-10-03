@@ -21,6 +21,10 @@
 					<a href="#">Features</a>
 					<a href="#">FAQ</a>
 					<a href="#">Pricing</a>
+					<form action="project" method="GET">
+						<input type="hidden" name="action" value="display">
+						<button type="submit">Display Projects</button>
+					</form>
 				</nav>
 			</div>
 			
@@ -60,10 +64,12 @@
 			</div>
 		</article>
 	</main>
-	<script>
-        setInterval(function() {
-            location.reload();
-        }, 1000);
-    </script>
+	<!--
+<script>
+   setInterval(function() {
+       location.reload();
+   }, 1000);
+</script>
+-->
 </body>
 </html>

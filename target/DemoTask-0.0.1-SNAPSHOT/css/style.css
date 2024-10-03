@@ -91,7 +91,7 @@ body{
 		justify-content: space-between;
 		
 		.box-01{
-			background-color:red;
+			/*background-color:red;*/
 			width:650px;
 		
 			h1{
