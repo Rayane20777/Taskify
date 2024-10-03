@@ -16,7 +16,7 @@ public class TeamDAOImpl implements TeamDAO{
     
     @Override
     public Team addTeam(Team team) throws SQLException {
-        String query = "INSERT INTO Teams (name) VALUES (?)";
+        String query = "INSERT INTO teams (name) VALUES (?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, team.getName());
@@ -52,7 +52,7 @@ public class TeamDAOImpl implements TeamDAO{
     
     @Override
     public void deleteTeam(Integer id) throws SQLException {
-        String query = "DELETE FROM Teams WHERE id = ?";
+        String query = "DELETE FROM teams WHERE id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
@@ -63,7 +63,7 @@ public class TeamDAOImpl implements TeamDAO{
     @Override
     public List<Team> getAllTeams() throws SQLException {
         List<Team> teams = new ArrayList<>();
-        String query = "SELECT * FROM Teams";
+        String query = "SELECT * FROM teams";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -80,7 +80,7 @@ public class TeamDAOImpl implements TeamDAO{
 
     @Override
     public Team getTeamById(int id) throws SQLException {
-        String query = "SELECT * FROM Teams WHERE id = ?";
+        String query = "SELECT * FROM teams WHERE id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);

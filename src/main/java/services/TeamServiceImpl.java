@@ -13,8 +13,10 @@ public class TeamServiceImpl implements TeamService {
     private TeamDAO teamDAO;
 
     public TeamServiceImpl(TeamDAO teamDAO) {
-        this.teamDAO = teamDAO;
-    }
+        if (teamDAO == null) {
+            throw new IllegalArgumentException("teamDAO cannot be null");
+        }
+        this.teamDAO = teamDAO;    }
     
     public TeamServiceImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
