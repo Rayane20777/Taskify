@@ -5,9 +5,9 @@ import models.Team;
 public class TeamDTO {
 	private int id;
 	private String name;
-
+	
 	public TeamDTO() {
-
+		
 	}
 	public TeamDTO(int id, String name) {
 		this.setId(id);
@@ -25,12 +25,12 @@ public class TeamDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 
 	public Team dtoToModel() {
 		return new Team(id,name);
 	}
-
+	
 	public static TeamDTO modelToDTO(Team team) {
 		return new TeamDTO(team.getId(), team.getName());
 	}

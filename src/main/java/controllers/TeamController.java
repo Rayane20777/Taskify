@@ -1,7 +1,7 @@
 package controllers;
 
 import dao.TeamDAO;
-import dao.TeamDAOImpl;
+import dao.TeamDAOImpl; 
 import models.Team;
 import dto.TeamDTO;
 import services.TeamService;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import config.DatabaseConnection;
 
 import java.io.IOException;
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,12 +26,12 @@ public class TeamController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         try {
-            Connection connection = DatabaseConnection.getConnection();
+            Connection connection = DatabaseConnection.getConnection(); 
             if (connection == null) {
                 throw new SQLException("Failed to create database connection.");
             }
             TeamDAO teamDAO = new TeamDAOImpl(connection);
-            teamService = new TeamServiceImpl(teamDAO);
+            teamService = new TeamServiceImpl(teamDAO); 
         } catch (SQLException e) {
             throw new ServletException("Cannot initialize DAO", e);
         }
@@ -63,13 +63,13 @@ public class TeamController extends HttpServlet {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
                 String name = request.getParameter("name");
-
+                
                 TeamDTO teamDTO = new TeamDTO();
                 teamDTO.setId(id);
                 teamDTO.setName(name);
-
+                
                 teamService.updateTeam(teamDTO);
-                response.sendRedirect("team");
+                response.sendRedirect("team");  
             } catch (SQLException e) {
                 e.printStackTrace();
                 request.setAttribute("errorMessage", "Failed to update team.");
@@ -106,7 +106,7 @@ public class TeamController extends HttpServlet {
         }
     }
 
-
+    
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

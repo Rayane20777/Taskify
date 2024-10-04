@@ -29,6 +29,16 @@
         <servlet-name>TeamController</servlet-name>
         <url-pattern>/addTeam</url-pattern>
     </servlet-mapping>
+    
+        <servlet>
+        <servlet-name>MemberController</servlet-name>
+        <servlet-class>controllers.MemberController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MemberController</servlet-name>
+        <url-pattern>/members</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>ProjectController</servlet-name>

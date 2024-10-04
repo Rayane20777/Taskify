@@ -82,8 +82,14 @@ public class ProjectDAOImpl implements ProjectDAO{
     @Override
     public List<Project> getAllProjects() throws SQLException {
         List<Project> projects = new ArrayList<>();
-        
-        String query = "SELECT * FROM Projects";
+
+        String query = "SELECT p.*, "
+                + "COUNT(t.id) AS total_tasks, "
+                + "SUM(CASE WHEN t.status = 'DONE' THEN 1 ELSE 0 END) AS completed_tasks, "
+                + "(SUM(CASE WHEN t.status = 'DONE' THEN 1 ELSE 0 END) / COUNT(t.id)) * 100 AS progress_percentage "
+                + "FROM Projects p "
+                + "LEFT JOIN Tasks t ON p.id = t.project_id "
+                + "GROUP BY p.id";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -119,7 +125,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                      + "(SUM(CASE WHEN t.status = 'DONE' THEN 1 ELSE 0 END) / COUNT(t.id)) * 100 AS progress_percentage "
                      + "FROM Projects p "
                      + "LEFT JOIN Tasks t ON p.id = t.project_id "
-                     + "WHERE p.id = ? "  // Add filtering for the specific project ID
+                     + "WHERE p.id = ? "
                      + "GROUP BY p.id";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

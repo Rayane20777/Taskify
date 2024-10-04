@@ -18,7 +18,7 @@ public class TeamRepositoryImpl implements TeamRepository {
         List<Team> teams = new ArrayList<>();
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             ResultSet rs = stmt.executeQuery();
 

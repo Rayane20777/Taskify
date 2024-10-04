@@ -3,9 +3,9 @@ package models;
 public class Team {
 	private int id;
 	private String name;
-	
+
 	public Team() {
-		
+
 	}
 	public Team(int id, String name) {
 		this.setId(id);
@@ -22,5 +22,13 @@ public class Team {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Team{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				'}';
 	}
 }

@@ -9,71 +9,110 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDAOImpl implements MemberDAO {
-	
-	 @Override
-	    public void addMember(Member member) throws SQLException {
-	        String query = "INSERT INTO members (fname, lname, email, role, team_id) VALUES (?, ?, ?, ?, ?)";
+    private final Connection connection;
 
-	        try (Connection conn = DatabaseConnection.getConnection();
-	             PreparedStatement stmt = conn.prepareStatement(query)) {
+    public MemberDAOImpl(Connection connection) {
+        this.connection = DatabaseConnection.getConnection();
+    }
 
-	            stmt.setString(1, member.getFname());
-	            stmt.setString(2, member.getLname());
-	            stmt.setString(3, member.getEmail());
-	            stmt.setString(4, member.getRole().toString());
-	            stmt.setInt(5, member.getTeamId());
+    @Override
+    public Member addMember(Member member) throws SQLException {
+        String query = "INSERT INTO members (fname, lname, email, role, team_id) VALUES (?, ?, ?, ?, ?)";
 
-	            stmt.executeUpdate();
-	        } 
-	    }
-	 
-	    @Override
-	    public List<Member> getAllMembers() throws SQLException {
-	        String query = "SELECT * FROM members";
-	        List<Member> members = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, member.getFname());
+            stmt.setString(2, member.getLname());
+            stmt.setString(3, member.getEmail());
+            stmt.setString(4, member.getRole().toString());
+            stmt.setInt(5, member.getTeamId());
 
-	        try (Connection conn = DatabaseConnection.getConnection();
-	             Statement stmt = conn.createStatement();
-	             ResultSet rs = stmt.executeQuery(query)) {
+            int affectedRows = stmt.executeUpdate();
 
-	            while (rs.next()) {
-	                Member member = new Member(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"),
-	                        rs.getString("email"), Role.valueOf(rs.getString("role")), rs.getInt("team_id"));
-	                members.add(member);
-	            }
-	        }
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        member.setId(generatedKeys.getInt(1)); 
+                    }
+                }
+            }
+        }
 
-	        return members;
-	    }
-	    
-	    @Override
-	    public void updateMember(Member member) throws SQLException{
-	        String query = "UPDATE members SET fname = ?, lname = ?, email = ?, role = ?, team_id = ? WHERE id = ?";
+        return member; 
+    }
 
-	        try (Connection conn = DatabaseConnection.getConnection();
-	             PreparedStatement stmt = conn.prepareStatement(query)) {
+    @Override
+    public Member updateMember(Member member) throws SQLException {
+        String query = "UPDATE members SET fname = ?, lname = ?, email = ?, role = ?, team_id = ? WHERE id = ?";
 
-	            stmt.setString(1, member.getFname());
-	            stmt.setString(2, member.getLname());
-	            stmt.setString(3, member.getEmail());
-	            stmt.setString(4, member.getRole().toString());
-	            stmt.setInt(5, member.getTeamId());
-	            stmt.setInt(6, member.getId());
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, member.getFname());
+            stmt.setString(2, member.getLname());
+            stmt.setString(3, member.getEmail());
+            stmt.setString(4, member.getRole().toString());
+            stmt.setInt(5, member.getTeamId());
+            stmt.setInt(6, member.getId());
 
-	            stmt.executeUpdate();
-	        } 
-	    }
-	    
+            stmt.executeUpdate();
+        }
 
-	    @Override
-	    public void deleteMember(int id) throws SQLException {
-	        String query = "DELETE FROM members WHERE id = ?";
+        return member; 
+    }
 
-	        try (Connection conn = DatabaseConnection.getConnection();
-	             PreparedStatement stmt = conn.prepareStatement(query)) {
+    @Override
+    public void deleteMember(int id) throws SQLException {
+        String query = "DELETE FROM members WHERE id = ?";
 
-	            stmt.setInt(1, id);
-	            stmt.executeUpdate();
-	        } 
-	    }
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public List<Member> getAllMembers() throws SQLException {
+        List<Member> members = new ArrayList<>();
+        String query = "SELECT * FROM members";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Member member = new Member(
+                        rs.getInt("id"),
+                        rs.getString("fname"),
+                        rs.getString("lname"),
+                        rs.getString("email"),
+                        Role.valueOf(rs.getString("role")),
+                        rs.getInt("team_id")
+                );
+                members.add(member);
+            }
+        }
+
+        return members; 
+    }
+
+    @Override
+    public Member getMemberById(int id) throws SQLException {
+        String query = "SELECT * FROM members WHERE id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Member(
+                            rs.getInt("id"),
+                            rs.getString("fname"),
+                            rs.getString("lname"),
+                            rs.getString("email"),
+                            Role.valueOf(rs.getString("role")),
+                            rs.getInt("team_id")
+                    );
+                } else {
+                    return null; 
+                }
+            }
+        }
+    }
 }

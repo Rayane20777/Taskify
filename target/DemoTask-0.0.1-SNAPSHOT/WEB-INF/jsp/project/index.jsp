@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Projects</title>
@@ -27,7 +28,7 @@
     </style>
 </head>
 <body>
-<div class="container mt-4">
+<div class="container-fluid mt-4" style="width: 80%">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light mb-4">
@@ -38,13 +39,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="project?action=list">Projects</a>
+                    <a class="nav-link" href="project?action=display">Projects</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="team">Teams</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="task?action=list">Tasks</a>
+                    <a class="nav-link" href="members">Members</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="index.jsp">Logout</a>
@@ -82,7 +83,7 @@
     <!-- Project List Table -->
     <c:if test="${not empty projects}">
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                 <thead class="thead-dark">
                 <tr>
                     <th>ID</th>

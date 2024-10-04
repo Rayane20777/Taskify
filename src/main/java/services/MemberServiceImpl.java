@@ -1,63 +1,67 @@
 package services;
 
-import dao.MemberDAO;
-import dto.MemberDTO;
-import models.Member;
-import repositories.MemberRepository;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MemberServiceImpl implements MemberService{
+import dao.MemberDAO;
+import dao.TeamDAO;
+import dto.MemberDTO;
+import models.Member;
+import models.Team;
+import repositories.MemberRepository;
+
+public class MemberServiceImpl implements MemberService {
     private MemberDAO memberDAO;
     private MemberRepository memberRepository;
+    private TeamDAO teamDAO;
 
-    public MemberServiceImpl(MemberDAO memberDAO, MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberDAO memberDAO, TeamDAO teamDAO) {
         this.memberDAO = memberDAO;
-        this.memberRepository = memberRepository;
+        this.teamDAO = teamDAO;
+    }
+    
+    
+
+	@Override
+    public Member addMember(MemberDTO memberDTO) throws SQLException {
+        Member member = new Member(memberDTO.getId(), memberDTO.getFname(), memberDTO.getLname(),
+                memberDTO.getEmail(), memberDTO.getRole(), memberDTO.getTeamId());
+        return memberDAO.addMember(member);
     }
 
     @Override
-    public void addMember(MemberDTO memberDTO) throws SQLException{
-        Member member = new Member(memberDTO.getId(), memberDTO.getFname(), memberDTO.getLname(),
-                memberDTO.getEmail(), memberDTO.getRole(), memberDTO.getTeamId());
-        memberDAO.addMember(member);
-    }
-    
-    @Override
-    public List<MemberDTO> getAllMembers() throws SQLException{
-        List<Member> members = memberDAO.getAllMembers();
-        List<MemberDTO> memberDTOs = new ArrayList<>();
-        for (Member member : members) {
-            memberDTOs.add(new MemberDTO(member.getId(), member.getFname(), member.getLname(),
-                    member.getEmail(), member.getRole(), member.getTeamId()));
+    public Member updateMember(MemberDTO memberDTO) throws SQLException {
+        if (memberDAO.getMemberById(memberDTO.getId()) == null) {
+            return null;
+        } else {
+            Member member = new Member(memberDTO.getId(), memberDTO.getFname(), memberDTO.getLname(),
+                    memberDTO.getEmail(), memberDTO.getRole(), memberDTO.getTeamId());
+            return memberDAO.updateMember(member);
         }
-        return memberDTOs;
-    }
-    
-    @Override
-    public List<MemberDTO> searchMembersByName(String name) {
-        List<Member> members = memberRepository.searchMembersByName(name);
-        List<MemberDTO> memberDTOs = new ArrayList<>();
-        for (Member member : members) {
-            memberDTOs.add(new MemberDTO(member.getId(), member.getFname(), member.getLname(),
-                    member.getEmail(), member.getRole(), member.getTeamId()));
-        }
-        return memberDTOs;
-    }
-    
-    @Override
-    public void updateMember(MemberDTO memberDTO) throws SQLException{
-        Member member = new Member(memberDTO.getId(), memberDTO.getFname(), memberDTO.getLname(),
-                memberDTO.getEmail(), memberDTO.getRole(), memberDTO.getTeamId());
-        memberDAO.updateMember(member);
     }
 
     @Override
-    public void deleteMember(int id) throws SQLException{
+    public void deleteMember(int id) throws SQLException {
+        if (memberDAO.getMemberById(id) == null) {
+            throw new SQLException("Member not found with ID: " + id);
+        }
         memberDAO.deleteMember(id);
     }
 
+    @Override
+    public List<Member> getAllMembers() throws SQLException {
+        List<Member> members = memberDAO.getAllMembers();
+        for (Member member : members) {
+            Team team = teamDAO.getTeamById(member.getTeamId());
+            member.setTeamId(team != null ? team.getId() : 0); // Set team ID instead of team name
+        }
+        return members;
+    }
 
+
+
+    @Override
+    public List<Member> searchMembers(String name) throws SQLException {
+        return memberRepository.searchMembers(name);
+    }
 }

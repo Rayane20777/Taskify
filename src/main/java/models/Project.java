@@ -110,4 +110,20 @@ public class Project {
     public void setProgressPercentage(double progressPercentage) {
         this.progressPercentage = progressPercentage;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status=" + status +
+                ", team=" + team +
+                ", totalTasks=" + totalTasks +
+                ", completedTasks=" + completedTasks +
+                ", progressPercentage=" + progressPercentage +
+                '}';
+    }
 }

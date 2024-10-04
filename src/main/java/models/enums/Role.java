@@ -2,7 +2,7 @@ package models.enums;
 
 public enum Role {
 	DEVELOPER,
-	DESINER,
+	DESIGNER,
 	PROJECT_MANAGER;
 
 }

@@ -74,6 +74,18 @@ public class Member {
     public void setTeamId(int team_id) {
         this.team_id = team_id;
     }
+
+	@Override
+	public String toString() {
+		return "Member{" +
+				"id=" + id +
+				", fname='" + fname + '\'' +
+				", lname='" + lname + '\'' +
+				", email='" + email + '\'' +
+				", role=" + role +
+				", team_id=" + team_id +
+				'}';
+	}
 }
 	
 	
