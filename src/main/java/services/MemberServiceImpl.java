@@ -4,20 +4,25 @@ import java.sql.SQLException;
 import java.util.List;
 
 import dao.MemberDAO;
+import dao.TeamDAO;
 import dto.MemberDTO;
 import models.Member;
+import models.Team;
 import repositories.MemberRepository;
 
 public class MemberServiceImpl implements MemberService {
-    private final MemberDAO memberDAO;
-    private final MemberRepository memberRepository;
+    private MemberDAO memberDAO;
+    private MemberRepository memberRepository;
+    private TeamDAO teamDAO;
 
-    public MemberServiceImpl(MemberDAO memberDAO, MemberRepository memberRepository) {
+    public MemberServiceImpl(MemberDAO memberDAO, TeamDAO teamDAO) {
         this.memberDAO = memberDAO;
-        this.memberRepository = memberRepository;
+        this.teamDAO = teamDAO;
     }
+    
+    
 
-    @Override
+	@Override
     public Member addMember(MemberDTO memberDTO) throws SQLException {
         Member member = new Member(memberDTO.getId(), memberDTO.getFname(), memberDTO.getLname(),
                 memberDTO.getEmail(), memberDTO.getRole(), memberDTO.getTeamId());
@@ -45,8 +50,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<Member> getAllMembers() throws SQLException {
-        return memberDAO.getAllMembers();
+        List<Member> members = memberDAO.getAllMembers();
+        for (Member member : members) {
+            Team team = teamDAO.getTeamById(member.getTeamId());
+            member.setTeamId(team != null ? team.getId() : 0); // Set team ID instead of team name
+        }
+        return members;
     }
+
+
 
     @Override
     public List<Member> searchMembers(String name) throws SQLException {

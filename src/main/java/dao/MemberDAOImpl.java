@@ -11,7 +11,7 @@ import java.util.List;
 public class MemberDAOImpl implements MemberDAO {
     private final Connection connection;
 
-    public MemberDAOImpl() {
+    public MemberDAOImpl(Connection connection) {
         this.connection = DatabaseConnection.getConnection();
     }
 
