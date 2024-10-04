@@ -32,26 +32,28 @@
     <tbody>
         <c:forEach var="team" items="${teams}">
             <tr>
-                <form action="team" method="post">
-                    <input type="hidden" name="_method" value="PUT" />
-                    <input type="hidden" name="id" value="${team.id}" />
-                    <td style="border: 1px solid black;">${team.id}</td>
-                    <td style="border: 1px solid black;">
+                <td style="border: 1px solid black;">${team.id}</td>
+                <td style="border: 1px solid black;">
+                    <!-- Update form with editable name input -->
+                    <form action="team" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="PUT" />
+                        <input type="hidden" name="id" value="${team.id}" />
                         <input type="text" name="name" value="${team.name}" />
-                    </td>
-                    <td style="border: 1px solid black;">
-                        <button type="submit">Update</button>
-                        <form action="team" method="post" style="display:inline;">
-                            <input type="hidden" name="_method" value="DELETE" />
-                            <input type="hidden" name="id" value="${team.id}" />
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </form>
+                    </form>
+                </td>
+                <td style="border: 1px solid black;">
+                    <!-- Delete form in the same cell -->
+                    <form action="team" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="id" value="${team.id}" />
+                        <button type="submit" >Delete</button>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
     </tbody>
 </table>
+
 
 
 

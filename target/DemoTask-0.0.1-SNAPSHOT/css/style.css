@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 :root{
 	--white: #fafafaff;
@@ -91,7 +91,7 @@ body{
 		justify-content: space-between;
 		
 		.box-01{
-			background-color:red;
+			/*background-color:red;*/
 			width:650px;
 		
 			h1{
@@ -140,7 +140,7 @@ body{
 		.box-02{
 			width:500px;
 			height:450px;
-			background : url('./img/box-02.png');
+			background-color: var(--light);
 		}
 	}
 }

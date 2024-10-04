@@ -1,5 +1,14 @@
 package dao;
 
-public interface ProjectDAO {
+import java.sql.SQLException;
+import java.util.List;
 
+import models.Project;
+
+public interface ProjectDAO {
+	public Project addProject(Project project) throws SQLException;
+	public Project modifyProject(Project project ) throws SQLException;
+	public void deleteProject(Integer id) throws SQLException;
+	public List<Project> getAllProjects() throws SQLException;
+	public Project getProjectById(int id) throws SQLException;
 }

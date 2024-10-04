@@ -40,4 +40,14 @@
         <url-pattern>/members</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ProjectController</servlet-name>
+        <servlet-class>controllers.ProjectController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProjectController</servlet-name>
+        <url-pattern>/project</url-pattern>
+    </servlet-mapping>
+
 </web-app>
