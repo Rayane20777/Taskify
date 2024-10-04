@@ -106,7 +106,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                     projects.add(project);
             }
         }
-
+        System.out.println("DAO"+projects);
         return projects;
     }
 

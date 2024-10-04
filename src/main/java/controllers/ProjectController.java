@@ -85,11 +85,12 @@ public class ProjectController extends HttpServlet {
                 if (searchTerm != null && !searchTerm.trim().isEmpty()) {
                     // Perform search
                     myProjects = projectService.searchProjects(searchTerm);
+                    System.out.println("serv"+myProjects);
 
                 } else {
                     // Display all projects
                     myProjects = projectService.getAllProjects();
-
+                    System.out.println("serv"+myProjects);
                 }
                 request.setAttribute("projects", myProjects);
             } catch (SQLException e) {
