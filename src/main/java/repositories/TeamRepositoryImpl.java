@@ -13,7 +13,7 @@ import models.Team;
 public class TeamRepositoryImpl implements TeamRepository {
 
     @Override
-    public List<Team> searchTeamsByName(String name) {
+    public List<Team> searchTeams(String name) {
         String query = "SELECT * FROM teams WHERE name LIKE ?";
         List<Team> teams = new ArrayList<>();
 

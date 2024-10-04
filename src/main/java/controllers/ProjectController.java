@@ -20,9 +20,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ProjectController extends HttpServlet {
 
+    Logger logger = Logger.getLogger(ProjectController.class.getName());
     private ProjectServiceImpl projectService;
     private TeamServiceImpl teamService;
 
@@ -33,7 +35,7 @@ public class ProjectController extends HttpServlet {
         ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(connection);
         ProjectDAOImpl projectDAO = new ProjectDAOImpl(connection);
 
-        TeamDAOImpl teamDAO = new TeamDAOImpl();
+        TeamDAOImpl teamDAO = new TeamDAOImpl(connection);
 
         projectService = new ProjectServiceImpl(projectRepository, projectDAO);
         teamService = new TeamServiceImpl(teamDAO);
@@ -52,6 +54,7 @@ public class ProjectController extends HttpServlet {
                 Project project = projectService.getProjectById(id);
                 request.setAttribute("project", project);
                 request.setAttribute("teams", teamService.getAllTeams());
+                request.setAttribute("projectStatus", ProjectStatus.values());
                 request.getRequestDispatcher("/WEB-INF/jsp/project/ProjectForm.jsp").forward(request, response);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -59,6 +62,8 @@ public class ProjectController extends HttpServlet {
         } else if ("create".equals(action)) {
             try {
                 request.setAttribute("teams", teamService.getAllTeams());
+                request.setAttribute("projectStatus", ProjectStatus.values());
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -73,22 +78,24 @@ public class ProjectController extends HttpServlet {
                 throw new RuntimeException(e);
             }
         } else {
-            List<Project> projects = null;
+            List<Project> myProjects ;
             String searchTerm = request.getParameter("searchTerm");
 
             try {
                 if (searchTerm != null && !searchTerm.trim().isEmpty()) {
                     // Perform search
-                    projects = projectService.searchProjects(searchTerm);
+                    myProjects = projectService.searchProjects(searchTerm);
+
                 } else {
                     // Display all projects
-                    projects = projectService.getAllProjects();
+                    myProjects = projectService.getAllProjects();
+
                 }
+                request.setAttribute("projects", myProjects);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
-            request.setAttribute("projects", projects);
             try {
                 request.setAttribute("teams", teamService.getAllTeams());
             } catch (SQLException e) {
@@ -122,14 +129,14 @@ public class ProjectController extends HttpServlet {
         String description = request.getParameter("description");
         LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
         LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
-        String statusStr = request.getParameter("status");
+        String statusStr = ProjectStatus.valueOf(request.getParameter("status")).toString();
         ProjectStatus status = ProjectStatus.valueOf(statusStr);
         int teamId = Integer.parseInt(request.getParameter("team_id"));
 
         try {
-            TeamDTO team = teamService.getTeamById(teamId);
+            TeamDTO team = TeamDTO.modelToDTO(teamService.getTeamById(teamId));
             ProjectDTO projectDTO = new ProjectDTO(projectId, name, description, startDate, endDate, status, team, 0, 0, 0.0);
-
+            logger.severe(projectDTO.getName());
             if (projectId == null) {
                 projectService.addProject(projectDTO);
             } else {

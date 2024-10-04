@@ -14,7 +14,7 @@
         <welcome-file>default.jsp</welcome-file>
         <welcome-file>default.htm</welcome-file>
     </welcome-file-list>
-    
+
     <servlet>
         <servlet-name>TeamController</servlet-name>
         <servlet-class>controllers.TeamController</servlet-class>
@@ -22,16 +22,12 @@
 
     <servlet-mapping>
         <servlet-name>TeamController</servlet-name>
-        <url-pattern>/showTeamPage</url-pattern>
+        <url-pattern>/team</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>TeamController</servlet-name>
         <url-pattern>/addTeam</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TeamController</servlet-name>
-        <url-pattern>/team</url-pattern>
     </servlet-mapping>
 
     <servlet>

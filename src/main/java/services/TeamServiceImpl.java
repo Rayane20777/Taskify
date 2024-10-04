@@ -1,7 +1,6 @@
 package services;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import dao.TeamDAO;
@@ -9,66 +8,57 @@ import dto.TeamDTO;
 import models.Team;
 import repositories.TeamRepository;
 
-public class TeamServiceImpl implements TeamService{
-    private TeamDAO teamDAO;
+public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
+    private TeamDAO teamDAO;
+
+    public TeamServiceImpl(TeamDAO teamDAO) {
+        if (teamDAO == null) {
+            throw new IllegalArgumentException("teamDAO cannot be null");
+        }
+        this.teamDAO = teamDAO;    }
 
     public TeamServiceImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
     }
 
-    public TeamServiceImpl(TeamDAO teamDAO) {
-        this.teamDAO = teamDAO;
-    }
-    
+
     @Override
-    public void addTeam(TeamDTO teamDTO) throws SQLException {
-        Team team = new Team();
-        team.setName(teamDTO.getName());
-        
-        teamDAO.addTeam(team);
+    public Team addTeam(TeamDTO team) throws SQLException {
+        Team teamModel = team.dtoToModel();
+        return teamDAO.addTeam(teamModel);
     }
-    
+
     @Override
-    public List<TeamDTO> getAllTeams() throws SQLException{
-        List<Team> teams = teamDAO.getAllTeams();
-        List<TeamDTO> teamDTOs = new ArrayList<>();
-        for (Team team : teams) {
-            teamDTOs.add(new TeamDTO(team.getId(), team.getName()));
+    public Team updateTeam(TeamDTO team) throws SQLException {
+        if (teamDAO.getTeamById(team.getId()) == null) {
+            return null;
+        } else {
+            Team teamModel = team.dtoToModel();
+            return teamDAO.updateTeam(teamModel);
         }
-        return teamDTOs;
     }
-    
+
     @Override
-    public TeamDTO getTeamById(int id) throws SQLException {
-        Team team = teamDAO.getTeamById(id);
-        if (team != null) {
-            return new TeamDTO(team.getId(), team.getName());
+    public void deleteTeam(Integer id) throws SQLException {
+        if (teamDAO.getTeamById(id) == null) {
+            throw new SQLException("Team not found with ID: " + id);
         }
-        return null;
-    }
-    
-    @Override
-    public void updateTeam(TeamDTO teamDTO) throws SQLException{
-        Team team = new Team();
-        team.setId(teamDTO.getId());
-        team.setName(teamDTO.getName());
-        teamDAO.updateTeam(team);
-    }
-    
-    @Override
-    public void deleteTeam(int id) throws SQLException{
         teamDAO.deleteTeam(id);
     }
-    
+
     @Override
-    public List<TeamDTO> searchTeamsByName(String name) {
-        List<Team> teams = teamRepository.searchTeamsByName(name);
-        List<TeamDTO> teamDTOs = new ArrayList<>();
-        for (Team team : teams) {
-            teamDTOs.add(new TeamDTO(team.getId(), team.getName()));
-        }
-        return teamDTOs;
+    public List<Team> getAllTeams() throws SQLException {
+        return teamDAO.getAllTeams();
     }
-    
+
+    @Override
+    public List<Team> searchTeams(String name) throws SQLException {
+        return teamRepository.searchTeams(name);
+    }
+
+    @Override
+    public Team getTeamById(int id) throws SQLException {
+        return teamDAO.getTeamById(id);
+    }
 }
