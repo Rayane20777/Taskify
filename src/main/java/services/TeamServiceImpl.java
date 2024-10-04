@@ -56,4 +56,9 @@ public class TeamServiceImpl implements TeamService {
     public List<Team> searchTeams(String name) throws SQLException {
         return teamRepository.searchTeams(name);
     }
+    
+    @Override
+    public Team getTeamById(int id) throws SQLException {
+        return teamDAO.getTeamById(id);
+    }
 }
