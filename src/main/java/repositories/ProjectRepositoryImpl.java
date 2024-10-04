@@ -17,9 +17,9 @@ public class ProjectRepositoryImpl implements ProjectRepository{
 	private final Connection connection;
 	private final TeamDAOImpl teamDAO;
 
-    public ProjectRepositoryImpl(Connection connection) {
+	public ProjectRepositoryImpl(Connection connection) {
         this.connection = connection;
-		this.teamDAO = new TeamDAOImpl();
+		this.teamDAO = new TeamDAOImpl(connection);
     }
     
 	@Override

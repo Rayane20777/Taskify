@@ -12,5 +12,6 @@ public interface ProjectService {
 	public void deleteProject(Integer id) throws SQLException;
 	public List<Project> getAllProjects() throws SQLException;
 	public List<Project> searchProjects(String searchTerm) throws SQLException;
+	public Project getProjectById(int id) throws SQLException;
 
 }

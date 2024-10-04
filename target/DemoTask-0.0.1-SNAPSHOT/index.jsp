@@ -21,6 +21,10 @@
 					<a href="#">Features</a>
 					<a href="#">FAQ</a>
 					<a href="#">Pricing</a>
+					<form action="project" method="GET">
+						<input type="hidden" name="action" value="display">
+						<button type="submit">Display Projects</button>
+					</form>
 				</nav>
 			</div>
 			
@@ -54,15 +58,18 @@
 		
 			<div class="art-left">
 				<div class="box-02">
+					<img src="./img/box-03.png" alt="girl holding a pen and a notebook"/>
 					<div class="mini-box-02"></div>
 				</div>
 			</div>
 		</article>
 	</main>
-	<script>
-        setInterval(function() {
-            location.reload();
-        }, 1000);
-    </script>
+	<!--
+<script>
+   setInterval(function() {
+       location.reload();
+   }, 1000);
+</script>
+-->
 </body>
 </html>

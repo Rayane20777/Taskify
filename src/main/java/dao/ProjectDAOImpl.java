@@ -19,7 +19,7 @@ public class ProjectDAOImpl implements ProjectDAO{
 
     public ProjectDAOImpl(Connection connection) {
         this.connection = connection;
-        this.teamDAO = new TeamDAOImpl();
+        this.teamDAO = new TeamDAOImpl(connection);
 
     }
     
@@ -83,13 +83,7 @@ public class ProjectDAOImpl implements ProjectDAO{
     public List<Project> getAllProjects() throws SQLException {
         List<Project> projects = new ArrayList<>();
         
-        String query = "SELECT p.*, "
-                     + "COUNT(t.id) AS total_tasks, "
-                     + "SUM(CASE WHEN t.status = 'DONE' THEN 1 ELSE 0 END) AS completed_tasks, "
-                     + "(SUM(CASE WHEN t.status = 'DONE' THEN 1 ELSE 0 END) / COUNT(t.id)) * 100 AS progress_percentage "
-                     + "FROM Projects p "
-                     + "LEFT JOIN Tasks t ON p.id = t.project_id "
-                     + "GROUP BY p.id";
+        String query = "SELECT * FROM Projects";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -100,13 +94,13 @@ public class ProjectDAOImpl implements ProjectDAO{
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),
-                        resultSet.getDate("start_date").toLocalDate(),
-                        resultSet.getDate("end_date").toLocalDate(),
+                        resultSet.getDate("startDate").toLocalDate(),
+                        resultSet.getDate("endDate").toLocalDate(),
                         ProjectStatus.valueOf(resultSet.getString("status")),
                         new Team(team.getId(), team.getName()),
-                        resultSet.getInt("total_tasks"),
-                        resultSet.getInt("completed_tasks"),
-                        resultSet.getDouble("progress_percentage")
+                        0,
+                        0,
+                        0.0
                     );
 
                     projects.add(project);
@@ -138,8 +132,8 @@ public class ProjectDAOImpl implements ProjectDAO{
 	                         resultSet.getInt("id"),
 	                         resultSet.getString("name"),
 	                         resultSet.getString("description"),
-	                         resultSet.getDate("start_date").toLocalDate(),
-	                         resultSet.getDate("end_date").toLocalDate(),
+	                         resultSet.getDate("startDate").toLocalDate(),
+	                         resultSet.getDate("endDate").toLocalDate(),
 	                         ProjectStatus.valueOf(resultSet.getString("status")),
 	                         new Team(team.getId(), team.getName()),
 	                         resultSet.getInt("total_tasks"),

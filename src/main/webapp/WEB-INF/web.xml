@@ -22,12 +22,22 @@
 
     <servlet-mapping>
         <servlet-name>TeamController</servlet-name>
-        <url-pattern>/showTeamPage</url-pattern>
+        <url-pattern>/team</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>TeamController</servlet-name>
         <url-pattern>/addTeam</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProjectController</servlet-name>
+        <servlet-class>controllers.ProjectController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProjectController</servlet-name>
+        <url-pattern>/project</url-pattern>
     </servlet-mapping>
 
 </web-app>

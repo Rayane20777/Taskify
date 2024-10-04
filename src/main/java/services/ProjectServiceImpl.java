@@ -56,4 +56,9 @@ public class ProjectServiceImpl implements ProjectService{
 		}
 	}
 
+	@Override
+	public Project getProjectById(int id) throws SQLException {
+		return projectDAO.getProjectById(id);
+	}
+
 }

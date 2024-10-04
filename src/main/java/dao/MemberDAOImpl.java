@@ -11,7 +11,7 @@ import java.util.List;
 public class MemberDAOImpl implements MemberDAO {
 	
 	 @Override
-	    public void addMember(Member member) {
+	    public void addMember(Member member) throws SQLException {
 	        String query = "INSERT INTO members (fname, lname, email, role, team_id) VALUES (?, ?, ?, ?, ?)";
 
 	        try (Connection conn = DatabaseConnection.getConnection();
@@ -24,13 +24,11 @@ public class MemberDAOImpl implements MemberDAO {
 	            stmt.setInt(5, member.getTeamId());
 
 	            stmt.executeUpdate();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	        } 
 	    }
 	 
 	    @Override
-	    public List<Member> getAllMembers() {
+	    public List<Member> getAllMembers() throws SQLException {
 	        String query = "SELECT * FROM members";
 	        List<Member> members = new ArrayList<>();
 
@@ -43,15 +41,13 @@ public class MemberDAOImpl implements MemberDAO {
 	                        rs.getString("email"), Role.valueOf(rs.getString("role")), rs.getInt("team_id"));
 	                members.add(member);
 	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
 	        }
 
 	        return members;
 	    }
 	    
 	    @Override
-	    public void updateMember(Member member) {
+	    public void updateMember(Member member) throws SQLException{
 	        String query = "UPDATE members SET fname = ?, lname = ?, email = ?, role = ?, team_id = ? WHERE id = ?";
 
 	        try (Connection conn = DatabaseConnection.getConnection();
@@ -65,14 +61,12 @@ public class MemberDAOImpl implements MemberDAO {
 	            stmt.setInt(6, member.getId());
 
 	            stmt.executeUpdate();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	        } 
 	    }
 	    
 
 	    @Override
-	    public void deleteMember(int id) {
+	    public void deleteMember(int id) throws SQLException {
 	        String query = "DELETE FROM members WHERE id = ?";
 
 	        try (Connection conn = DatabaseConnection.getConnection();
@@ -80,8 +74,6 @@ public class MemberDAOImpl implements MemberDAO {
 
 	            stmt.setInt(1, id);
 	            stmt.executeUpdate();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	        } 
 	    }
 }
