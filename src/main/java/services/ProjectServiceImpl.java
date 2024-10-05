@@ -43,9 +43,14 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public List<Project> getAllProjects() throws SQLException {
-		System.out.println("ProjectServiceImpl"+projectDAO.getAllProjects());
-		return projectDAO.getAllProjects();
+	public List<Project> getAllProjects(int page, int pageSize) throws SQLException {
+		int offset = (page - 1) * pageSize;
+		return projectDAO.getAllProjects(offset, pageSize);
+	}
+
+
+	public int getTotalProjectsCount() throws SQLException {
+		return projectDAO.getTotalProjectsCount();
 	}
 
 	@Override

@@ -125,6 +125,30 @@
                 </tbody>
             </table>
         </div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <c:if test="${currentPage > 1}">
+                    <li class="page-item">
+                        <a class="page-link" href="project?action=display&page=${currentPage - 1}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
+                        <a class="page-link" href="project?action=display&page=${i}">${i}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${currentPage < totalPages}">
+                    <li class="page-item">
+                        <a class="page-link" href="project?action=display&page=${currentPage + 1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
     </c:if>
 
     <c:if test="${empty projects}">

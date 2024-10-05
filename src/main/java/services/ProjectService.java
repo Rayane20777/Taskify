@@ -10,7 +10,7 @@ public interface ProjectService {
 	public Project addProject(ProjectDTO project) throws SQLException;
 	public Project modifyProject(ProjectDTO project ) throws SQLException;
 	public void deleteProject(Integer id) throws SQLException;
-	public List<Project> getAllProjects() throws SQLException;
+	public List<Project> getAllProjects(int page, int pageSize) throws SQLException;
 	public List<Project> searchProjects(String searchTerm) throws SQLException;
 	public Project getProjectById(int id) throws SQLException;
 

@@ -87,11 +87,22 @@ public class ProjectController extends HttpServlet {
                     myProjects = projectService.searchProjects(searchTerm);
                     System.out.println("serv"+myProjects);
                 } else {
-                    // Display all projects
-                    myProjects = projectService.getAllProjects();
-                    for (Project project : myProjects) {
-                        logger.severe("ProjectController"+project);
+                    int currentPage = Integer.parseInt(request.getParameter("page") != null ? request.getParameter("page") : "1");
+                    int pageSize = 10;
+
+                    try {
+                        int totalProjects = projectService.getTotalProjectsCount();
+                        int totalPages = (int) Math.ceil((double) totalProjects / pageSize);
+
+                        myProjects = projectService.getAllProjects(currentPage, pageSize);
+                        request.setAttribute("projects", myProjects);
+                        request.setAttribute("totalPages", totalPages);
+                        request.setAttribute("currentPage", currentPage);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/project/index.jsp").forward(request, response);
                 }
                 request.setAttribute("projects", myProjects);
             } catch (SQLException e) {
