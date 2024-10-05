@@ -54,9 +54,14 @@ public class TeamServiceImpl implements TeamService {
         int skipCount = (page - 1) * pageSize;
 
     	    return allTeams.stream()
-    	            .skip(skipCount) // Skip teams that are not on this page
-    	            .limit(pageSize) // Limit to the page size
+    	            .skip(skipCount)
+    	            .limit(pageSize)
     	            .collect(Collectors.toList());    }
+
+
+    public List<Team> getAllTeams() throws SQLException {
+        return teamDAO.getAllTeams();
+    }
 
     @Override
     public List<Team> searchTeams(String name) throws SQLException {
