@@ -3,17 +3,16 @@
 <html>
 <head>
     <title>Projects</title>
-    <!-- Include Bootstrap CSS and FontAwesome for icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         .float-end {
-            float: right; /* Ensures the search bar and button float to the right */
+            float: right;
         }
         @media (max-width: 768px) {
             .float-end {
-                float: none; /* Disable floating on smaller screens */
-                width: 100%; /* Full width for mobile view */
+                float: none;
+                width: 100%;
             }
         }
         .search-row {
@@ -30,7 +29,6 @@
 <body>
 <div class="container-fluid mt-4" style="width: 80%">
 
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light mb-4">
         <a class="navbar-brand" href="#">Taskify</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,9 +52,7 @@
         </div>
     </nav>
 
-    <!-- Search Bar and Add Project Button -->
     <div class="row mb-3 search-row d-flex justify-content-between align-items-center">
-        <!-- Add New Project Button -->
         <div class="col-lg-3 col-md-12">
             <form action="project" method="GET">
                 <input type="hidden" name="action" value="create">
@@ -65,14 +61,13 @@
         </div>
 
         <div class="col-lg-5 col-md-12">
-            <!-- Search Form with an icon on the right -->
             <form action="project" method="POST" class="form-inline w-100">
                 <input type="hidden" name="action" value="search">
                 <div class="input-group w-100">
                     <input type="text" id="searchTerm" name="searchTerm" class="form-control" placeholder="Enter project name or description" />
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-secondary">
-                            <i class="fas fa-search"></i> <!-- Search icon -->
+                            <i class="fas fa-search"></i>
                         </button>
                     </div>
                 </div>
@@ -80,7 +75,6 @@
         </div>
     </div>
 
-    <!-- Project List Table -->
     <c:if test="${not empty projects}">
         <div class="table-responsive">
             <table class="table table-striped table-hover" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
@@ -131,9 +125,32 @@
                 </tbody>
             </table>
         </div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <c:if test="${currentPage > 1}">
+                    <li class="page-item">
+                        <a class="page-link" href="project?action=display&page=${currentPage - 1}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
+                        <a class="page-link" href="project?action=display&page=${i}">${i}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${currentPage < totalPages}">
+                    <li class="page-item">
+                        <a class="page-link" href="project?action=display&page=${currentPage + 1}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
     </c:if>
 
-    <!-- Message if no projects are found -->
     <c:if test="${empty projects}">
         <div class="alert alert-warning" role="alert">
             No projects found.
@@ -141,7 +158,6 @@
     </c:if>
 </div>
 
-<!-- Include Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

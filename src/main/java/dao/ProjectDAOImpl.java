@@ -80,7 +80,7 @@ public class ProjectDAOImpl implements ProjectDAO{
     }
 
     @Override
-    public List<Project> getAllProjects() throws SQLException {
+    public List<Project> getAllProjects(int offset, int limit) throws SQLException {
         List<Project> projects = new ArrayList<>();
 
         String query = "SELECT p.*, "
@@ -89,33 +89,47 @@ public class ProjectDAOImpl implements ProjectDAO{
                 + "(SUM(CASE WHEN t.status = 'DONE' THEN 1 ELSE 0 END) / COUNT(t.id)) * 100 AS progress_percentage "
                 + "FROM Projects p "
                 + "LEFT JOIN Tasks t ON p.id = t.project_id "
-                + "GROUP BY p.id";
+                + "GROUP BY p.id "
+                + "LIMIT ? OFFSET ?";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
 
-            while (resultSet.next()) {
-                Team team = teamDAO.getTeamById(resultSet.getInt("team_id"));
-                Project project = new Project(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getDate("startDate").toLocalDate(),
-                        resultSet.getDate("endDate").toLocalDate(),
-                        ProjectStatus.valueOf(resultSet.getString("status")),
-                        new Team(team.getId(), team.getName()),
-                        0,
-                        0,
-                        0.0
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Team team = teamDAO.getTeamById(resultSet.getInt("team_id"));
+                    Project project = new Project(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("description"),
+                            resultSet.getDate("startDate").toLocalDate(),
+                            resultSet.getDate("endDate").toLocalDate(),
+                            ProjectStatus.valueOf(resultSet.getString("status")),
+                            new Team(team.getId(), team.getName()),
+                            resultSet.getInt("total_tasks"),
+                            resultSet.getInt("completed_tasks"),
+                            resultSet.getDouble("progress_percentage")
                     );
-
                     projects.add(project);
+                }
             }
         }
-        System.out.println("DAO"+projects);
+
         return projects;
     }
 
+    @Override
+    public int getTotalProjectsCount() throws SQLException {
+        String query = "SELECT COUNT(*) FROM Projects";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        }
+        return 0;
+    }
 
     @Override
     public Project getProjectById(int id) throws SQLException {
