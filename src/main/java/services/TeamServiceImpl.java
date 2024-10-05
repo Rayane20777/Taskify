@@ -2,6 +2,7 @@ package services;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dao.TeamDAO;
 import dto.TeamDTO;
@@ -48,9 +49,14 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Team> getAllTeams() throws SQLException {
-        return teamDAO.getAllTeams();
-    }
+    public List<Team> getAllTeams(int page, int pageSize) throws SQLException {
+        List<Team> allTeams = teamDAO.getAllTeams();
+        int skipCount = (page - 1) * pageSize;
+
+    	    return allTeams.stream()
+    	            .skip(skipCount) // Skip teams that are not on this page
+    	            .limit(pageSize) // Limit to the page size
+    	            .collect(Collectors.toList());    }
 
     @Override
     public List<Team> searchTeams(String name) throws SQLException {

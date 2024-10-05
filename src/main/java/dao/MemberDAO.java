@@ -10,4 +10,6 @@ public interface MemberDAO {
     void deleteMember(int id) throws SQLException;
     public List<Member> getAllMembers() throws SQLException;
     public Member getMemberById(int id) throws SQLException;
+    public int getTotalCount() throws SQLException;
+
 }

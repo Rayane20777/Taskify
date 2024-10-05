@@ -41,11 +41,23 @@ public class TeamController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            if (teamService == null) {
-                throw new ServletException("TeamService is not initialized.");
+            int page = 1;
+            int pageSize = 10; 
+
+            String pageStr = request.getParameter("page");
+
+            if (pageStr != null) {
+                page = Integer.parseInt(pageStr);
             }
-            List<Team> teams = teamService.getAllTeams();
+
+            List<Team> teams = teamService.getAllTeams(page, pageSize);
+            int teamCount = teamService.getAllTeams(1, Integer.MAX_VALUE).size(); // Get total count of teams
+            int totalPages = (int) Math.ceil(teamCount * 1.0 / pageSize);
+
             request.setAttribute("teams", teams);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+
             request.getRequestDispatcher("/WEB-INF/jsp/Team.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,6 +65,7 @@ public class TeamController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
         }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

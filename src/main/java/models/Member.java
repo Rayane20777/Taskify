@@ -9,7 +9,7 @@ public class Member {
 	private String email;
 	private Role role;
 	private int team_id;
-	
+	private String teamName;
 
 	
 	public Member() {
@@ -75,6 +75,13 @@ public class Member {
         this.team_id = team_id;
     }
 
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 	@Override
 	public String toString() {
 		return "Member{" +

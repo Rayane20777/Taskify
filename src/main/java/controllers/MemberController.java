@@ -6,6 +6,7 @@ import dao.TeamDAO;
 import dao.TeamDAOImpl;
 import dto.MemberDTO;
 import models.Member;
+import models.Team;
 import models.enums.Role;
 import services.MemberService;
 import services.MemberServiceImpl;
@@ -35,7 +36,7 @@ public class MemberController extends HttpServlet {
             }
             MemberDAO memberDAO = new MemberDAOImpl(connection);
             TeamDAO teamDAO = new TeamDAOImpl(connection);
-            memberService = new MemberServiceImpl(memberDAO, teamDAO);  // Pass teamDAO to service layer
+            memberService = new MemberServiceImpl(memberDAO, teamDAO);
         } catch (SQLException e) {
             throw new ServletException("Cannot initialize DAO", e);
         }
@@ -48,15 +49,36 @@ public class MemberController extends HttpServlet {
             if (memberService == null) {
                 throw new ServletException("MemberService is not initialized.");
             }
-            List<Member> members = memberService.getAllMembers();
+
+            int page = 1; // Default page number
+            int pageSize = 10; // Default page size
+
+            String pageStr = request.getParameter("page");
+            if (pageStr != null) {
+                try {
+                    page = Integer.parseInt(pageStr);
+                } catch (NumberFormatException e) {
+                    // Handle invalid page number (set to default)
+                }
+            }
+
+            List<MemberDTO> members = memberService.getAllMembers(page, pageSize);
+            List<Team> teams = memberService.getAllTeams(); // Fetch all teams
+
+            // Set attributes for JSP
             request.setAttribute("members", members);
+            request.setAttribute("teams", teams);
+            request.setAttribute("currentPage", page);
+
             request.getRequestDispatcher("/WEB-INF/jsp/Member.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Failed to retrieve members.");
+            request.setAttribute("errorMessage", "Failed to retrieve members or teams.");
             request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
         }
     }
+
+
 
     
     @Override

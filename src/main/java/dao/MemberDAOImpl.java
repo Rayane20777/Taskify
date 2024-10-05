@@ -115,4 +115,17 @@ public class MemberDAOImpl implements MemberDAO {
             }
         }
     }
+    
+
+    @Override
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM members";
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        }
+        return 0;
+    }
 }
