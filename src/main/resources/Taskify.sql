@@ -28,15 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `members` (
-                           `id` int(11) NOT NULL,
-                           `fname` varchar(50) NOT NULL,
-                           `lname` varchar(50) NOT NULL,
-                           `email` varchar(255) NOT NULL,
-                           `role` enum('PROJECT_MANAGER','DEVELOPER','DESIGNER') NOT NULL,
-                           `team_id` int(11) NOT NULL,
-                           `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                           `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                           `deleted_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int(11) NOT NULL,
+  `fname` varchar(50) NOT NULL,
+  `lname` varchar(50) NOT NULL,
+  `email` varchar(255) NOT NULL UNIQUE,
+  `role` enum('PROJECT_MANAGER','DEVELOPER','DESIGNER') NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -46,16 +44,14 @@ CREATE TABLE `members` (
 --
 
 CREATE TABLE `projects` (
-                            `id` int(11) NOT NULL,
-                            `name` varchar(255) NOT NULL,
-                            `description` longtext NOT NULL,
-                            `start_date` date NOT NULL,
-                            `end_date` date NOT NULL,
-                            `status` enum('TODO','DOING','PAUSED','DONE','CANCELED') NOT NULL,
-                            `team_id` int(11) NOT NULL,
-                            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                            `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                            `deleted_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` longtext NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `status` enum('TODO','DOING','PAUSED','DONE','CANCELED') NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -65,18 +61,16 @@ CREATE TABLE `projects` (
 --
 
 CREATE TABLE `tasks` (
-                         `id` int(11) NOT NULL,
-                         `title` varchar(255) NOT NULL,
-                         `description` longtext NOT NULL,
-                         `priority` enum('LOW','MEDIUM','HIGH') NOT NULL,
-                         `status` enum('TODO','DOING','DONE') NOT NULL,
-                         `start_date` date NOT NULL,
-                         `end_date` date NOT NULL,
-                         `member_id` int(11) NOT NULL,
-                         `project_id` int(11) NOT NULL,
-                         `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                         `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                         `deleted_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` longtext NOT NULL,
+  `priority` enum('LOW','MEDIUM','HIGH') NOT NULL,
+  `status` enum('TODO','DOING','DONE') NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `member_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -86,11 +80,9 @@ CREATE TABLE `tasks` (
 --
 
 CREATE TABLE `teams` (
-                         `id` int(11) NOT NULL,
-                         `name` varchar(255) NOT NULL,
-                         `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                         `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-                         `deleted_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -101,21 +93,21 @@ CREATE TABLE `teams` (
 -- Indexes for table `members`
 --
 ALTER TABLE `members`
-    ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `FK_member_team` (`team_id`);
 
 --
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
-    ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `FK_project_team` (`team_id`);
 
 --
 -- Indexes for table `tasks`
 --
 ALTER TABLE `tasks`
-    ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `FK_task_member` (`member_id`),
   ADD KEY `FK_task_project` (`project_id`);
 
@@ -123,7 +115,7 @@ ALTER TABLE `tasks`
 -- Indexes for table `teams`
 --
 ALTER TABLE `teams`
-    ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -133,25 +125,25 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -161,19 +153,19 @@ ALTER TABLE `teams`
 -- Constraints for table `members`
 --
 ALTER TABLE `members`
-    ADD CONSTRAINT `FK_member_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
+  ADD CONSTRAINT `FK_member_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
 
 --
 -- Constraints for table `projects`
 --
 ALTER TABLE `projects`
-    ADD CONSTRAINT `FK_project_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
+  ADD CONSTRAINT `FK_project_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
 
 --
 -- Constraints for table `tasks`
 --
 ALTER TABLE `tasks`
-    ADD CONSTRAINT `FK_task_member` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`),
+  ADD CONSTRAINT `FK_task_member` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`),
   ADD CONSTRAINT `FK_task_project` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
 COMMIT;
 

@@ -1,0 +1,83 @@
+[33me3efe04[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmerge[m[33m, [m[1;31morigin/merge[m[33m)[m test with JUNIT
+[33mf9e71bd[m[33m ([m[1;31morigin/my-new-branch[m[33m, [m[1;32mmy-new-branch[m[33m)[m fixing conflict
+[33mc46b6e3[m Merge branch 'merge' of https://github.com/Rayane20777/Taskify into merge
+[33m8eb5c4c[m fixed conflicts and merged
+[33m90a4282[m fixing bugs
+[33md3ba382[m adding pagination for member and teams changing the UI and many other changes
+[33md5fb9ac[m adding ProjectServiceImplTest + all test passed
+[33m543b551[m initializing JUnit
+[33md8ebf3c[m adding some changes to ui
+[33m320a787[m merging merge 2.0 and merge
+[33m6b3510d[m merge
+[33m4d751d1[m merging conflicts fixed
+[33mdfc564d[m[33m ([m[1;31morigin/TAS-30[m[33m, [m[1;32mTAS-30[m[33m)[m members crud done only delete remaining
+[33m2d44c27[m merging TAS-13 and merge
+[33m42caa99[m merging TAS-13 and merge
+[33m5d0c257[m merge
+[33m73ecbb0[m[33m ([m[1;31morigin/TAS-14[m[33m, [m[1;31morigin/TAS-13[m[33m)[m displaying all projects + search projects + add new project
+[33m4575f76[m test
+[33m49750ec[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #6 from Rayane20777/TAS-33
+[33m598ad6e[m Merge pull request #5 from Rayane20777/TAS-32
+[33mdc15140[m[33m ([m[1;31morigin/TAS-33[m[33m, [m[1;32mTAS-33[m[33m)[m creting team update without UI style
+[33mfc99e45[m[33m ([m[1;31morigin/TAS-32[m[33m, [m[1;32mTAS-32[m[33m)[m finishing team delete without UI style
+[33m994300f[m addingdelte button
+[33ma9bd18b[m[33m ([m[1;31morigin/TAS-31[m[33m, [m[1;32mTAS-31[m[33m)[m displaying team done + need of UI design
+[33m6ff46c4[m[33m ([m[1;32mmain[m[33m)[m fixing error
+[33m51d88a5[m Merge pull request #4 from Rayane20777/TAS-35
+[33m1827c10[m[33m ([m[1;31morigin/TAS-35[m[33m, [m[1;32mTAS-35[m[33m)[m fixing Member Crud
+[33m7ea91b0[m fixing conflict
+[33md6befbb[m merging new change
+[33m112ebec[m[33m ([m[1;31morigin/TAS-34[m[33m, [m[1;32mTAS-34[m[33m)[m remaking TEAM CRUD
+[33m3bca091[m test
+[33m5002bc9[m fixing bugs
+[33m0f652ee[m merging
+[33mfbd354f[m fixing throw sqlexception in controller
+[33m57edc07[m fixing throw sqlexception
+[33mfcfed23[m initiating branch
+[33mc1d9b3a[m merging branch TAS-35 + TAS-01
+[33m4e8ca6a[m modifs
+[33mec1fc4f[m fixing DTO : adding DTO to Models methods + throwing sql exeptin
+[33m140f301[m fixing TeamServiceImplm
+[33ma45f6cf[m merging TAS-35 and main
+[33mc1a112a[m[33m ([m[1;31morigin/TAS-01[m[33m)[m filling project dao + dto + model + service + repository
+[33meb9a5bb[m Team getTeamById service and repository done
+[33mb194f6c[m Member Repository done
+[33m7d2a156[m Member Service done
+[33mb2abf64[m Member DAO done
+[33med512ee[m testing
+[33m1000d0c[m team search by name Repository and service
+[33md31737a[m team delete DAO and Service
+[33maa360d7[m team update DAO and Service
+[33m3ed4e1f[m getting all teams DAO and Service
+[33m8cb381d[m testing
+[33m6064e8b[m[33m ([m[1;31morigin/TAS-25[m[33m)[m test
+[33m041605f[m modifs
+[33m052e802[m initializing home page
+[33md389b8b[m creating controller plus servlet mapping and therefore completing team adding without the design of the UI
+[33m0935692[m Resolved merge conflict in pom.properties
+[33ma768087[m creating Team Service
+[33m86ce4da[m creating the team add functionality in DAO
+[33m51b7ec3[m adding webapp structure
+[33m6c3c896[m creating team and member DTO
+[33m2e773a5[m adding team and members models
+[33ma38e09a[m added sql script
+[33me4b7aaf[m Resolved merge conflict in pom.properties
+[33mdd5face[m test
+[33m9a0a9c1[m new project structure
+[33md2098f9[m modifs
+[33m43d71be[m new structure
+[33m6907a5f[m modifs
+[33mb8eccbc[m merging incoming changes from main
+[33m6f425f7[m modifs
+[33me0e4872[m merging incoming changes from TAS-25
+[33m6cc7dcb[m Merge pull request #2 from Rayane20777/TAS-25
+[33mcd26c10[m converting project to maven + database connection
+[33m37fff62[m reconfiguring environement
+[33ma13ac29[m configuring environement
+[33m0eeb99a[m test
+[33m7ef04c6[m Merge branch 'TAS-25' of https://github.com/Rayane20777/Taskify
+[33m1026869[m test
+[33m82f1d42[m Merge pull request #1 from Rayane20777/TAS-13
+[33m24be980[m testing
+[33m36016f1[m project structure
+[33m1ef8a6f[m first commit
