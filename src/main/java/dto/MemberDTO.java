@@ -24,6 +24,15 @@ public class MemberDTO {
 		
 	}
 	
+	public MemberDTO(int id, String fname, String lname, String email, Role role, int team_id) {
+		this.id = id;
+		this.fname = fname;
+		this.lname = lname;
+		this.email = email;
+		this.role = role;
+		this.team_id = team_id;
+	}
+	
 	public MemberDTO(int id, String fname, String lname, String email, Role role, int team_id, String teamName) {
 		this.id = id;
 		this.fname = fname;

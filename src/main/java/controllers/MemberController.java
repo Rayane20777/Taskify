@@ -1,5 +1,6 @@
 package controllers;
 
+import config.DatabaseConnection;
 import dao.MemberDAO;
 import dao.MemberDAOImpl;
 import dao.TeamDAO;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import config.DatabaseConnection;
 
 import java.io.IOException;
 import java.sql.Connection;
